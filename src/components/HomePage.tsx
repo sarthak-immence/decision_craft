@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
+import { TextField, Button, Typography, List, ListItem, ListItemText, ListItemSecondaryAction, IconButton } from '@mui/material';
+import { Delete, Edit } from '@mui/icons-material';
 import './HomePage.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItem, editItem, deleteItem } from '../redux/master/slices/masterSlices';
 
 interface array_data {
   name: string;
@@ -7,78 +11,128 @@ interface array_data {
 
 function HomePage() {
   const [input, setInput] = useState<string>('');
-  const [array_data, setArray_data] = useState<array_data[]>([]);
+  // const array_data = useSelector((state: array_data[]) => state);
+  // const array_data = useSelector((state:array_data[]) => state.array_data);
+  const array_data = useSelector((state: { array_data: array_data[] }) => state.array_data);
+
+  console.log("array_data",array_data);
+  
   const [show, setShow] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editIndex, setEditIndex] = useState<number | null>(null);
 
+  const dispatch = useDispatch();
+
   const handleInput = (e: React.FormEvent) => {
     e.preventDefault();
+    const trimmedInput = input.trim();
+    if (trimmedInput === "") {
+      return;
+    }
+
+    const isDuplicate = array_data.some((item) => item.name.toLowerCase() === trimmedInput.toLowerCase());
+
+    if (isDuplicate) {
+      alert("This name is already in the list.");
+      return;
+    }
+
     if (isEditing && editIndex !== null) {
-      // If in edit mode, update the item
-      const updatedArray = [...array_data];
-      updatedArray[editIndex] = { name: input };
-      setArray_data(updatedArray);
-      setIsEditing(false);
-      setEditIndex(null);
+      dispatch(editItem({ index: editIndex , newName:input}));
     } else {
-      // Otherwise, add a new item
-      setArray_data([...array_data, { name: input }]);
+      dispatch(addItem(trimmedInput));
     }
     setInput('');
   };
+
+  // const handleEdit = (index: number) => {
+  //   setIsEditing(true);
+  //   setEditIndex(index);
+  //   setInput(array_data[index].name);
+  //   dispatch(editItem({ index: index }));
+  // };
 
   const handleEdit = (index: number) => {
     setIsEditing(true);
     setEditIndex(index);
     setInput(array_data[index].name);
   };
+  
 
-  const handleDelete = (index: number, e: React.FormEvent) => {
-    e.preventDefault();
-    const updatedArray = array_data.filter((_, i) => i !== index);
-    setArray_data(updatedArray);
+
+  const handleDelete = (index: number) => {
+    dispatch(deleteItem({ index: index }));
   };
 
   return (
     <div className="mainDiv">
-      <div>
-        <h3>HomePage</h3>
+      <div className='title_cls'>
+        <Typography variant="h3">HomePage</Typography>
       </div>
-      <div>
+      <div className='input-section'>
         <form onSubmit={handleInput}>
-          <input
+          <TextField
             type="text"
             className="input_div"
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={(e: any) => setInput(e.target.value)}
+            label="Enter a name"
+            variant="outlined"
           />
-          <button type="submit">{isEditing ? 'Update' : 'Submit'}</button>
+          <Button
+            className='submit_bttn'
+            type="submit"
+            variant="contained"
+            color="primary"
+          >
+            {isEditing ? 'Update' : 'Submit'}
+          </Button>
         </form>
       </div>
 
-      <div>
-        {array_data.map((data, index) => (
-          <div key={index}>
-            <ul>
-              <li>
-                <strong>{index + 1}.</strong> {data.name}&nbsp;
-                <button onClick={() => handleEdit(index)}>Edit</button>&nbsp;
-                <button onClick={(e) => handleDelete(index, e)}>Delete</button>
-              </li>
-            </ul>
-          </div>
-        ))}
+      <div className='list-section'>
+        <List>
+          {array_data.map((data, index) => (
+            <ListItem key={index}>
+              <ListItemText>
+                <strong>{index + 1}.</strong> {data.name}
+              </ListItemText>
+              <ListItemSecondaryAction>
+                <IconButton
+                  edge="end"
+                  aria-label="edit"
+                  onClick={() => handleEdit(index)}
+                >
+                  <Edit />
+                </IconButton>
+                <IconButton
+                  edge="end"
+                  aria-label="delete"
+                  onClick={() => handleDelete(index)}
+                >
+                  <Delete />
+                </IconButton>
+              </ListItemSecondaryAction>
+            </ListItem>
+          ))}
+        </List>
       </div>
-      <div>
-        <button className="close-button" onClick={() => setShow(!show)}>
-        auto select
-        </button>
+      <div className='gnt-section'>
+        <Button
+          className="auto_select-button"
+          variant="contained"
+          color="success"
+          onClick={() => setShow(!show)}
+        >
+          auto select
+        </Button>
       </div>
       <div className="answer-section">
-        <h3>Your answer</h3>
+        <Typography variant="h6">Your answer</Typography>
         {show && (
-          <h3>{array_data[Math.floor(Math.random() * array_data.length)]?.name}</h3>
+          <Typography variant="body1">
+            {array_data[Math.floor(Math.random() * array_data.length)]?.name}
+          </Typography>
         )}
       </div>
     </div>
