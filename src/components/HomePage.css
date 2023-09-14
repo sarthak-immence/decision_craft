@@ -9,6 +9,7 @@
   border-radius: 5px;
   background-color: #f8f8f8;
   font-family: Arial, sans-serif;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); 
   
 }
 
@@ -34,7 +35,9 @@
 
 .submit_bttn {
   /* width: 100%; */
-  background-color: #8a3a18 !important; 
+  /* background-color: #8a3a18 !important;  */
+  /* background-color: #4F709C !important;  */
+  background-color: #A9907E !important; 
   color: #fff;
   border: none;
   border-radius: 5px;
@@ -84,7 +87,9 @@
 
 .auto_select-button {
   width: 100%;
-  background-color: #a72889 !important;
+  /* background-color: #a72889 !important; */
+  /* background-color: #E5D283 !important; */
+  background-color: #ABC4AA !important;
   color: #fff;
   border: none;
   border-radius: 5px;

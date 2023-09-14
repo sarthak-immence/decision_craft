@@ -6,18 +6,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addItem, editItem, deleteItem } from '../redux/master/slices/masterSlices';
 
 interface array_data {
-  name: string;
+  name: string; 
 }
 
 function HomePage() {
   const [input, setInput] = useState<string>('');
-  // const array_data = useSelector((state: array_data[]) => state);
-  // const array_data = useSelector((state:array_data[]) => state.array_data);
   const array_data = useSelector((state: { array_data: array_data[] }) => state.array_data);
 
-  console.log("array_data",array_data);
-  
-  const [show, setShow] = useState(false);
+
+  // const [show, setShow] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [editIndex, setEditIndex] = useState<number | null>(null);
 
@@ -38,7 +35,7 @@ function HomePage() {
     }
 
     if (isEditing && editIndex !== null) {
-      dispatch(editItem({ index: editIndex , newName:input}));
+      dispatch(editItem({ index: editIndex, newName: input }));
     } else {
       dispatch(addItem(trimmedInput));
     }
@@ -57,12 +54,17 @@ function HomePage() {
     setEditIndex(index);
     setInput(array_data[index].name);
   };
-  
 
 
   const handleDelete = (index: number) => {
     dispatch(deleteItem({ index: index }));
   };
+
+  const handleRandomSelect = () => {
+    const randomIndex = Math.floor(Math.random() * array_data.length);
+    setInput(array_data[randomIndex].name);
+  };
+
 
   return (
     <div className="mainDiv">
@@ -122,16 +124,22 @@ function HomePage() {
           className="auto_select-button"
           variant="contained"
           color="success"
-          onClick={() => setShow(!show)}
+          // onClick={() => setShow(!show)}
+          onClick={handleRandomSelect} 
         >
           auto select
         </Button>
       </div>
       <div className="answer-section">
         <Typography variant="h6">Your answer</Typography>
-        {show && (
+        {/* {show && (
           <Typography variant="body1">
             {array_data[Math.floor(Math.random() * array_data.length)]?.name}
+          </Typography>
+        )} */}
+        {input && (
+          <Typography variant="body1">
+            {input}
           </Typography>
         )}
       </div>

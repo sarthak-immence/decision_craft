@@ -1,15 +1,15 @@
-// import {
-//     masterRolesEndPoint
-//   } from '../../../api/api-end-point';
-//   import commonAPI from '../../../api/common';
+import {
+    masterRolesEndPoint
+  } from '../../../api/api-end-point';
+  import commonAPI from '../../../api/common';
   
-//   class MasterService {
+  class MasterService {
     
-//     roles() {
-//         return commonAPI.get(`/${masterRolesEndPoint}`);
-//       }
+    roles() {
+        return commonAPI.get(`/${masterRolesEndPoint}`);
+      }
    
-//   }
+  }
   
-//   export default new MasterService();
+  export default new MasterService();
   
