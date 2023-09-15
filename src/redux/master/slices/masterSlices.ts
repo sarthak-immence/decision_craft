@@ -22,8 +22,11 @@ const arrayDataSlice = createSlice({
     deleteItem: (state, action: PayloadAction<{ index: number }>) => {
       state.splice(action.payload.index, 1);
     },
+    resetItem: (state) => {
+      state.splice(0)
+    },
   },
 });
 
-export const { addItem, editItem, deleteItem } = arrayDataSlice.actions;
+export const { addItem, editItem, deleteItem , resetItem } = arrayDataSlice.actions;
 export default arrayDataSlice.reducer;

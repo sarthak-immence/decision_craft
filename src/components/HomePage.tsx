@@ -3,7 +3,7 @@ import { TextField, Button, Typography, List, ListItem, ListItemText, ListItemSe
 import { Delete, Edit } from '@mui/icons-material';
 import './HomePage.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { addItem, editItem, deleteItem } from '../redux/master/slices/masterSlices';
+import { addItem, editItem, deleteItem, resetItem } from '../redux/master/slices/masterSlices';
 
 interface array_data {
   name: string; 
@@ -13,6 +13,8 @@ function HomePage() {
   const [input, setInput] = useState<string>('');
   const array_data = useSelector((state: { array_data: array_data[] }) => state.array_data);
 
+  console.log("array_data",array_data);
+  
 
   // const [show, setShow] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
@@ -42,34 +44,44 @@ function HomePage() {
     setInput('');
   };
 
-  // const handleEdit = (index: number) => {
-  //   setIsEditing(true);
-  //   setEditIndex(index);
-  //   setInput(array_data[index].name);
-  //   dispatch(editItem({ index: index }));
-  // };
-
   const handleEdit = (index: number) => {
     setIsEditing(true);
     setEditIndex(index);
     setInput(array_data[index].name);
+    dispatch(editItem({ index: index , newName:input}));
   };
+
+  // const handleEdit = (index: number) => {
+  //   setIsEditing(true);
+  //   setEditIndex(index);
+  //   setInput(array_data[index].name);
+  // };
 
 
   const handleDelete = (index: number) => {
     dispatch(deleteItem({ index: index }));
   };
-
+  
   const handleRandomSelect = () => {
-    const randomIndex = Math.floor(Math.random() * array_data.length);
-    setInput(array_data[randomIndex].name);
+    if(array_data.length){
+      const randomIndex = Math.floor(Math.random() * array_data.length);
+      setInput(array_data[randomIndex].name);
+    }
   };
+  const handleReset = () => {
+    // if(array_data.length){
+      
+      //   const randomIndex = Math.floor(Math.random() * array_data.length);
+      //   setInput(array_data[randomIndex].name);
+      // }
+      dispatch(resetItem());
+    };
 
 
   return (
     <div className="mainDiv">
       <div className='title_cls'>
-        <Typography variant="h3">HomePage</Typography>
+        <Typography variant="h3">Decision Craft</Typography>
       </div>
       <div className='input-section'>
         <form onSubmit={handleInput}>
@@ -123,12 +135,24 @@ function HomePage() {
         <Button
           className="auto_select-button"
           variant="contained"
-          color="success"
+          color="secondary"
           // onClick={() => setShow(!show)}
           onClick={handleRandomSelect} 
-        >
+          >
+            
           auto select
         </Button>
+        <Button
+          className="auto_select-button"
+          variant="contained"
+          // color="success"
+          color="primary"
+          // onClick={() => setShow(!show)}
+          onClick={handleReset} 
+          >
+          reset
+        </Button>
+          
       </div>
       <div className="answer-section">
         <Typography variant="h6">Your answer</Typography>
@@ -138,7 +162,7 @@ function HomePage() {
           </Typography>
         )} */}
         {input && (
-          <Typography variant="body1">
+          <Typography variant="body1" className='answer_output'>
             {input}
           </Typography>
         )}

@@ -1,7 +1,14 @@
-body {
+@import url(https://fonts.googleapis.com/css?family=Share+Tech+Mono);
+
+
+body  {
     margin: 0;
     padding: 0;
     background-color: #e4e2c3;
     height: 100vh;
+}
+
+p,h1,h2,h3,h4,h5,h6{
     
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;    
 }

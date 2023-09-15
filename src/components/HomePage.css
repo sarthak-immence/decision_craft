@@ -19,7 +19,7 @@
 }
 
 .title_cls h3 {
-  font-size: 24px;
+  font-size: 30px;
   margin-bottom: 20px;
   color: #333;
 }
@@ -34,7 +34,7 @@
 }
 
 .submit_bttn {
-  /* width: 100%; */
+  width: 100%;
   /* background-color: #8a3a18 !important;  */
   /* background-color: #4F709C !important;  */
   background-color: #A9907E !important; 
@@ -47,7 +47,8 @@
 }
 
 .submit_bttn:hover {
-  background-color: #0056b3 !important;
+  /* background-color: #0056b3 !important; */
+  background-color: #9A3B3B !important;
 }
 
 /* List section styles */
@@ -83,15 +84,19 @@
 /* Generate section styles */
 .gnt-section {
   margin-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+  /* align-items: ; */
 }
 
 .auto_select-button {
-  width: 100%;
+  width: 45%;
   /* background-color: #a72889 !important; */
   /* background-color: #E5D283 !important; */
-  background-color: #ABC4AA !important;
+  /* background-color: #ABC4AA !important; */
   color: #fff;
   border: none;
+  /* margin: 10px !important; */
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
@@ -110,4 +115,8 @@
   font-size: 18px;
   margin-top: 20px;
   color: #333;
+}
+
+.answer_output{
+  font-size: 25px !important;
 }
