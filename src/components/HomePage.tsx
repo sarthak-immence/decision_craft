@@ -14,7 +14,6 @@ function HomePage() {
   const array_data = useSelector((state: { array_data: array_data[] }) => state.array_data);
 
   console.log("array_data",array_data);
-  
 
   // const [show, setShow] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
@@ -80,6 +79,9 @@ function HomePage() {
 
   return (
     <div className="mainDiv">
+      <div>
+        <a href='/'>login</a>
+      </div>
       <div className='title_cls'>
         <Typography variant="h3">Decision Craft</Typography>
       </div>
