@@ -36,6 +36,7 @@ function HomePage() {
     }
 
     if (isEditing && editIndex !== null) {
+      setIsEditing(false);
       dispatch(editItem({ index: editIndex, newName: input }));
     } else {
       dispatch(addItem(trimmedInput));
@@ -79,7 +80,7 @@ function HomePage() {
 
   return (
     <div className="mainDiv">
-      <div>
+      <div className='navigate_cls'>
         <a href='/'>login</a>
       </div>
       <div className='title_cls'>
@@ -118,11 +119,13 @@ function HomePage() {
                   edge="end"
                   aria-label="edit"
                   onClick={() => handleEdit(index)}
+                className='icon_button'
                 >
                   <Edit />
                 </IconButton>
                 <IconButton
                   edge="end"
+                  className='icon_button'
                   aria-label="delete"
                   onClick={() => handleDelete(index)}
                 >
@@ -157,16 +160,18 @@ function HomePage() {
           
       </div>
       <div className="answer-section">
+        {input && (
+        <>
         <Typography variant="h6">Your answer</Typography>
         {/* {show && (
           <Typography variant="body1">
-            {array_data[Math.floor(Math.random() * array_data.length)]?.name}
+          {array_data[Math.floor(Math.random() * array_data.length)]?.name}
           </Typography>
         )} */}
-        {input && (
           <Typography variant="body1" className='answer_output'>
             {input}
           </Typography>
+        </>
         )}
       </div>
     </div>

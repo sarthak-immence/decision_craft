@@ -5,11 +5,15 @@
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;
-  border: 1px solid #ccc;
+  /* border: 1px solid #ccc; */
   border-radius: 5px;
-  background-color: #f8f8f8 !important; /* Neutral light background */
+  /* background-color: #f8f8f8 !important;  */
   font-family: Arial, sans-serif;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); 
+  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);  */
+}
+
+.navigate_cls{
+  text-align: end;
 }
 
 /* Title styles */
@@ -20,7 +24,8 @@
 .title_cls h3 {
   font-size: 30px;
   margin-bottom: 20px;
-  color: #333; /* Dark gray text */
+  /* color: #333; */
+  color: #ffffff; /* Dark gray text */
 }
 
 /* Input section styles */
@@ -34,7 +39,8 @@
 
 .submit_bttn {
   width: 100%;
-  background-color: #9A3B3B !important; /* Deep red button */
+  /* background-color: #9A3B3B !important;  */
+  background-color: #8212cd !important; 
   color: #fff; /* White text on the button */
   border: none;
   border-radius: 5px;
@@ -43,8 +49,9 @@
   margin-top: 10px !important;
 }
 
-.submit_bttn:hover {
-  background-color: #218838 !important; /* Green on hover for contrast */
+a{
+  color:cornflowerblue ;
+  text-decoration: none;
 }
 
 /* List section styles */
@@ -58,14 +65,20 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #fff; /* White list background */
+  /* background-color: #fff;  */
+  background-color: #423a6f !important; 
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  /* border: 1px solid #ccc; */
+  /* border-radius: 5px; */
 }
 
-.list-section strong {
+/* .list-section strong {
   font-weight: bold;
+} */
+
+.icon_button{
+  color: white !important ;
+  padding-right: 20px !important;
 }
 
 .list-section .edit_bttn,
@@ -74,7 +87,9 @@
   padding: 5px;
   margin-left: 10px;
   border: none;
-  background-color: transparent;
+  /* background-color: transparent; */
+  background-color: #ffffff;
+  color: #ffffff !important;
 }
 
 /* Generate section styles */
@@ -95,7 +110,7 @@
 }
 
 .auto_select-button:hover {
-  background-color: #218838; /* Green on hover for contrast */
+  background-color: #218838; 
 }
 
 /* Answer section styles */
@@ -106,14 +121,28 @@
 .answer-section h6 {
   font-size: 18px;
   margin-top: 20px;
-  color: #333; /* Dark gray text */
+  color: #fff; 
 }
 
 .answer_output {
   font-size: 25px;
-  background-color: #ffffff; /* White answer background */
-  border: 1px solid #ccc;
+  /* background-color: #ffffff;  */
+  background-color: #423a6f ;
+  color: #ffffff; /* White answer background */
+  /* border: 1px solid #ccc; */
   padding: 10px;
   font-weight: bold;
   margin-top: 10px;
+}
+
+input[type=text],
+input[type=text]:focus{
+  color: #fff;
+  border: none;
+  background-color: rgba(0, 0, 0, .2);
+}
+
+.list-section{
+  /* background-color: #423a6f !important; */
+  color: #F8F9FA !important;
 }
