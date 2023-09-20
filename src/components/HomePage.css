@@ -1,7 +1,18 @@
 /* HomePage.css */
 
+
+.mainDivContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh; /* 100% of the viewport height */
+}
+
+
+
 /* Main container styles */
 .mainDiv {
+  /* flex: 1; */
   max-width: 400px;
   margin: 0 auto;
   padding: 20px;
@@ -46,7 +57,7 @@
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  margin-top: 10px !important;
+  margin-top: 20px !important;
 }
 
 a{
@@ -94,9 +105,10 @@ a{
 
 /* Generate section styles */
 .gnt-section {
-  margin: 20px 0;
+  /* margin: 20px 0; */
   display: flex;
   justify-content: space-between;
+  padding: 20px;
 }
 
 .auto_select-button {
@@ -145,4 +157,10 @@ input[type=text]:focus{
 .list-section{
   /* background-color: #423a6f !important; */
   color: #F8F9FA !important;
+}
+
+/* Add this to your HomePage.css or another appropriate CSS file */
+.list-container {
+  height: 270px; /* Adjust the height as needed */
+  overflow-y: scroll;
 }

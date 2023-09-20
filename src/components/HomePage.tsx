@@ -1,24 +1,28 @@
 import React, { useState } from 'react';
-import { TextField, Button, Typography, List, ListItem, ListItemText, ListItemSecondaryAction, IconButton } from '@mui/material';
+import { TextField, Button, Typography, List, ListItem, ListItemText, ListItemSecondaryAction, IconButton, Dialog, DialogTitle, DialogContent, DialogActions } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
 import './HomePage.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem, editItem, deleteItem, resetItem } from '../redux/master/slices/masterSlices';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+
 
 interface array_data {
-  name: string; 
+  name: string;
 }
 
 function HomePage() {
   const [input, setInput] = useState<string>('');
   const array_data = useSelector((state: { array_data: array_data[] }) => state.array_data);
 
-  console.log("array_data",array_data);
-
   // const [show, setShow] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [editIndex, setEditIndex] = useState<number | null>(null);
-
+  const [showAutoSelectPopup, setShowAutoSelectPopup] = useState(false);
+  const [autoSelectAnswer, setAutoSelectAnswer] = useState('');
+  
   const dispatch = useDispatch();
 
   const handleInput = (e: React.FormEvent) => {
@@ -31,7 +35,7 @@ function HomePage() {
     const isDuplicate = array_data.some((item) => item.name.toLowerCase() === trimmedInput.toLowerCase());
 
     if (isDuplicate) {
-      alert("This name is already in the list.");
+      toast.error("This name is already in the list.");
       return;
     }
 
@@ -48,7 +52,7 @@ function HomePage() {
     setIsEditing(true);
     setEditIndex(index);
     setInput(array_data[index].name);
-    dispatch(editItem({ index: index , newName:input}));
+    dispatch(editItem({ index: index, newName: input }));
   };
 
   // const handleEdit = (index: number) => {
@@ -61,28 +65,39 @@ function HomePage() {
   const handleDelete = (index: number) => {
     dispatch(deleteItem({ index: index }));
   };
-  
-  const handleRandomSelect = () => {
-    if(array_data.length){
-      const randomIndex = Math.floor(Math.random() * array_data.length);
-      setInput(array_data[randomIndex].name);
-    }
-  };
+
+  // const handleRandomSelect = () => {
+  //   if (array_data.length) {
+  //     const randomIndex = Math.floor(Math.random() * array_data.length);
+  //     setInput(array_data[randomIndex].name);
+  //     setAuto_select("show")
+  //   }
+  // };
   const handleReset = () => {
     // if(array_data.length){
-      
-      //   const randomIndex = Math.floor(Math.random() * array_data.length);
-      //   setInput(array_data[randomIndex].name);
-      // }
-      dispatch(resetItem());
-    };
+    //   const randomIndex = Math.floor(Math.random() * array_data.length);
+    //   setInput(array_data[randomIndex].name);
+    // }
+    dispatch(resetItem());
+    setInput('')
+  };
+
+  const handleRandomSelect = () => {
+    if (array_data.length) {
+      const randomIndex = Math.floor(Math.random() * array_data.length);
+      setAutoSelectAnswer(array_data[randomIndex].name);
+      setShowAutoSelectPopup(true);
+    }
+  };
+  const handleCloseAutoSelectPopup = () => {
+    setShowAutoSelectPopup(false);
+  };
+    
 
 
   return (
+    <div className="mainDivContainer">
     <div className="mainDiv">
-      <div className='navigate_cls'>
-        <a href='/'>login</a>
-      </div>
       <div className='title_cls'>
         <Typography variant="h3">Decision Craft</Typography>
       </div>
@@ -90,7 +105,7 @@ function HomePage() {
         <form onSubmit={handleInput}>
           <TextField
             type="text"
-            className="input_div"
+            className="input_div custom-input"
             value={input}
             onChange={(e: any) => setInput(e.target.value)}
             label="Enter a name"
@@ -106,8 +121,8 @@ function HomePage() {
           </Button>
         </form>
       </div>
-
       <div className='list-section'>
+        <div className="list-container">
         <List>
           {array_data.map((data, index) => (
             <ListItem key={index}>
@@ -119,7 +134,7 @@ function HomePage() {
                   edge="end"
                   aria-label="edit"
                   onClick={() => handleEdit(index)}
-                className='icon_button'
+                  className='icon_button'
                 >
                   <Edit />
                 </IconButton>
@@ -135,45 +150,75 @@ function HomePage() {
             </ListItem>
           ))}
         </List>
+        </div>
       </div>
       <div className='gnt-section'>
         <Button
           className="auto_select-button"
           variant="contained"
           color="secondary"
-          // onClick={() => setShow(!show)}
-          onClick={handleRandomSelect} 
-          >
-            
+          onClick={handleRandomSelect}
+        >
           auto select
         </Button>
         <Button
           className="auto_select-button"
           variant="contained"
-          // color="success"
           color="primary"
-          // onClick={() => setShow(!show)}
-          onClick={handleReset} 
-          >
+          onClick={handleReset}
+        >
           reset
         </Button>
-          
+
       </div>
-      <div className="answer-section">
-        {input && (
-        <>
-        <Typography variant="h6">Your answer</Typography>
-        {/* {show && (
-          <Typography variant="body1">
-          {array_data[Math.floor(Math.random() * array_data.length)]?.name}
-          </Typography>
-        )} */}
-          <Typography variant="body1" className='answer_output'>
-            {input}
-          </Typography>
-        </>
+
+      <div className='gnt-section'>
+    <Button
+      className="auto_select-button"
+      variant="contained"
+      color="secondary"
+      onClick={handleRandomSelect}
+    >
+      auto select
+    </Button>
+    <Button
+      className="auto_select-button"
+      variant="contained"
+      color="primary"
+      onClick={handleReset}
+    >
+      reset
+    </Button>
+  </div>
+
+      {/* <div className="answer-section">
+        {auto_select==="show" && (
+          <>
+            <Typography variant="h6">Your answer</Typography>
+            <Typography variant="body1" className='answer_output'>
+              {input}
+            </Typography>
+          </>
         )}
-      </div>
+      </div> */}
+      <ToastContainer position="top-center" autoClose={2000} />
+      <Dialog
+  open={showAutoSelectPopup}
+  onClose={handleCloseAutoSelectPopup}
+  aria-labelledby="auto-select-dialog-title"
+>
+  <DialogTitle id="auto-select-dialog-title">Auto-Selected Answer</DialogTitle>
+  <DialogContent>
+    <Typography variant="body1">{autoSelectAnswer}</Typography>
+  </DialogContent>
+  <DialogActions>
+    <Button onClick={handleCloseAutoSelectPopup} color="primary">
+      Close
+    </Button>
+  </DialogActions>
+</Dialog>
+
+    </div>
     </div>
   );
 }
