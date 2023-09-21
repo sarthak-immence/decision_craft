@@ -13,7 +13,9 @@ interface array_data {
   name: string;
 }
 
+
 function HomePage() {
+
   const [input, setInput] = useState<string>('');
   const array_data = useSelector((state: { array_data: array_data[] }) => state.array_data);
 
@@ -22,7 +24,8 @@ function HomePage() {
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [showAutoSelectPopup, setShowAutoSelectPopup] = useState(false);
   const [autoSelectAnswer, setAutoSelectAnswer] = useState('');
-  
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false); // Add state to control button's disabled state
+
   const dispatch = useDispatch();
 
   const handleInput = (e: React.FormEvent) => {
@@ -35,7 +38,11 @@ function HomePage() {
     const isDuplicate = array_data.some((item) => item.name.toLowerCase() === trimmedInput.toLowerCase());
 
     if (isDuplicate) {
+      setIsButtonDisabled(true);
       toast.error("This name is already in the list.");
+      setTimeout(() => {
+        setIsButtonDisabled(false); // Enable the button after 2000ms (2 seconds)
+      }, 3000);
       return;
     }
 
@@ -92,106 +99,95 @@ function HomePage() {
   const handleCloseAutoSelectPopup = () => {
     setShowAutoSelectPopup(false);
   };
-    
-
-
   return (
     <div className="mainDivContainer">
-    <div className="mainDiv">
-      <div className='title_cls'>
-        <Typography variant="h3">Decision Craft</Typography>
-      </div>
-      <div className='input-section'>
-        <form onSubmit={handleInput}>
-          <TextField
-            type="text"
-            className="input_div custom-input"
-            value={input}
-            onChange={(e: any) => setInput(e.target.value)}
-            label="Enter a name"
-            variant="outlined"
-          />
+      <div className="mainDiv">
+        <div className='title_cls'>
+          <Typography variant="h3">Decision Craft</Typography>
+        </div>
+        <div className='input-section'>
+          <form onSubmit={handleInput}>
+            <TextField
+              type="text"
+              className="input_div custom-input"
+              value={input}
+              onChange={(e: any) => setInput(e.target.value)}
+              label="Enter a name"
+              // label={<span style={{ color: 'white' }}>Enter a name</span>}
+              sx={{
+                '& label': {
+                  color: 'white', // Apply red color to the label
+                },
+
+              }}
+              variant="outlined"
+            />
+            <Button
+              className='submit_bttn'
+              type="submit"
+              variant="contained"
+              color="primary"
+              disabled={isButtonDisabled}
+            >
+              {isEditing ? 'Update' : 'Submit'}
+            </Button>
+          </form>
+        </div>
+        <div className='list-section'>
+          <div className="list-container">
+            <List>
+              {array_data.map((data, index) => (
+                <ListItem key={index}>
+                   <ListItemText
+        primary={
+          <Typography>
+            <strong>{index + 1}.</strong> {data.name}
+          </Typography>
+        }
+       
+      />
+                  <ListItemSecondaryAction>
+                    <IconButton
+                      edge="end"
+                      aria-label="edit"
+                      onClick={() => handleEdit(index)}
+                      className='icon_button'
+                    >
+                      <Edit />
+                    </IconButton>
+                    <IconButton
+                      edge="end"
+                      className='icon_button'
+                      aria-label="delete"
+                      onClick={() => handleDelete(index)}
+                    >
+                      <Delete />
+                    </IconButton>
+                  </ListItemSecondaryAction>
+                </ListItem>
+              ))}
+            </List>
+          </div>
+        </div>
+        <div className='gnt-section'>
           <Button
-            className='submit_bttn'
-            type="submit"
+            className="auto_select-button"
+            variant="contained"
+            color="secondary"
+            onClick={handleRandomSelect}
+          >
+            auto select
+          </Button>
+          <Button
+            className="auto_select-button"
             variant="contained"
             color="primary"
+            onClick={handleReset}
           >
-            {isEditing ? 'Update' : 'Submit'}
+            reset
           </Button>
-        </form>
-      </div>
-      <div className='list-section'>
-        <div className="list-container">
-        <List>
-          {array_data.map((data, index) => (
-            <ListItem key={index}>
-              <ListItemText>
-                <strong>{index + 1}.</strong> {data.name}
-              </ListItemText>
-              <ListItemSecondaryAction>
-                <IconButton
-                  edge="end"
-                  aria-label="edit"
-                  onClick={() => handleEdit(index)}
-                  className='icon_button'
-                >
-                  <Edit />
-                </IconButton>
-                <IconButton
-                  edge="end"
-                  className='icon_button'
-                  aria-label="delete"
-                  onClick={() => handleDelete(index)}
-                >
-                  <Delete />
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>
-          ))}
-        </List>
         </div>
-      </div>
-      <div className='gnt-section'>
-        <Button
-          className="auto_select-button"
-          variant="contained"
-          color="secondary"
-          onClick={handleRandomSelect}
-        >
-          auto select
-        </Button>
-        <Button
-          className="auto_select-button"
-          variant="contained"
-          color="primary"
-          onClick={handleReset}
-        >
-          reset
-        </Button>
-
-      </div>
-
-      <div className='gnt-section'>
-    <Button
-      className="auto_select-button"
-      variant="contained"
-      color="secondary"
-      onClick={handleRandomSelect}
-    >
-      auto select
-    </Button>
-    <Button
-      className="auto_select-button"
-      variant="contained"
-      color="primary"
-      onClick={handleReset}
-    >
-      reset
-    </Button>
-  </div>
-
-      {/* <div className="answer-section">
+        {/* <div className="answer-section">
         {auto_select==="show" && (
           <>
             <Typography variant="h6">Your answer</Typography>
@@ -201,24 +197,23 @@ function HomePage() {
           </>
         )}
       </div> */}
-      <ToastContainer position="top-center" autoClose={2000} />
-      <Dialog
-  open={showAutoSelectPopup}
-  onClose={handleCloseAutoSelectPopup}
-  aria-labelledby="auto-select-dialog-title"
->
-  <DialogTitle id="auto-select-dialog-title">Auto-Selected Answer</DialogTitle>
-  <DialogContent>
-    <Typography variant="body1">{autoSelectAnswer}</Typography>
-  </DialogContent>
-  <DialogActions>
-    <Button onClick={handleCloseAutoSelectPopup} color="primary">
-      Close
-    </Button>
-  </DialogActions>
-</Dialog>
-
-    </div>
+        <ToastContainer position="top-center" autoClose={2000} limit={1} max-count={1} />
+        <Dialog
+          open={showAutoSelectPopup}
+          onClose={handleCloseAutoSelectPopup}
+          aria-labelledby="auto-select-dialog-title"
+        >
+          <DialogTitle id="auto-select-dialog-title">Auto-Selected Answer</DialogTitle>
+          <DialogContent>
+            <Typography variant="body1">{autoSelectAnswer}</Typography>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleCloseAutoSelectPopup} color="primary">
+              Close
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </div>
     </div>
   );
 }
