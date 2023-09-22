@@ -86,7 +86,7 @@ function HomePage() {
     //   setInput(array_data[randomIndex].name);
     // }
     dispatch(resetItem());
-    setInput('')
+    setInput('');
   };
 
   const handleRandomSelect = () => {
@@ -138,14 +138,13 @@ function HomePage() {
             <List>
               {array_data.map((data, index) => (
                 <ListItem key={index}>
-                   <ListItemText
-        primary={
-          <Typography>
-            <strong>{index + 1}.</strong> {data.name}
-          </Typography>
-        }
-       
-      />
+                  <ListItemText
+                    primary={
+                      <Typography>
+                        <strong>{index + 1}.</strong> {data.name}
+                      </Typography>
+                    }
+                  />
                   <ListItemSecondaryAction>
                     <IconButton
                       edge="end"
@@ -202,9 +201,27 @@ function HomePage() {
           open={showAutoSelectPopup}
           onClose={handleCloseAutoSelectPopup}
           aria-labelledby="auto-select-dialog-title"
+          sx={{
+            // Add your custom CSS styles here
+            '& .MuiDialogTitle-root': {
+              backgroundColor: 'blue', // Change the background color of the dialog title
+              color: 'white', // Change the text color of the dialog title
+            },
+            '& .MuiDialogContent-root': {
+              padding: '20px', // Add padding to the dialog content
+            },
+            '& .MuiDialogActions-root': {
+              justifyContent: 'flex-end', // Align the dialog actions to the right
+            },
+          }}
         >
           <DialogTitle id="auto-select-dialog-title">Auto-Selected Answer</DialogTitle>
-          <DialogContent>
+          <DialogContent sx={{
+            // padding: "20px",
+            fontWeight: "bold",
+            fontSize: "40px" ,
+            textAlign: 'center', // Center-align the content
+          }} >
             <Typography variant="body1">{autoSelectAnswer}</Typography>
           </DialogContent>
           <DialogActions>
