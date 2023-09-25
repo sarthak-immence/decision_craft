@@ -17,7 +17,7 @@ const arrayDataSlice = createSlice({
     },
     editItem: (state, action: PayloadAction<{ index: number, newName: string }>) => {
       const { index, newName } = action.payload;
-      state[index].name = newName; // Update the name at the specified index
+      state[index].name = newName;
     },
     deleteItem: (state, action: PayloadAction<{ index: number }>) => {
       state.splice(action.payload.index, 1);

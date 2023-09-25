@@ -40,7 +40,6 @@ export const productPersistConfig = {
 };
 
 const rootReducer = combineReducers({
-  // master: masterSlices,
   array_data: arrayDataReducer,
 });
 

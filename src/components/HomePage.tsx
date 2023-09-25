@@ -7,19 +7,14 @@ import { addItem, editItem, deleteItem, resetItem } from '../redux/master/slices
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
-
 interface array_data {
   name: string;
 }
-
 
 function HomePage() {
 
   const [input, setInput] = useState<string>('');
   const array_data = useSelector((state: { array_data: array_data[] }) => state.array_data);
-
-  // const [show, setShow] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [showAutoSelectPopup, setShowAutoSelectPopup] = useState(false);
@@ -35,13 +30,13 @@ function HomePage() {
       return;
     }
 
-    const isDuplicate = array_data.some((item) => item.name.toLowerCase() === trimmedInput.toLowerCase());
+    const isDuplicate = array_data.some((item) => item.name.toLowerCase().replace(/\s/g, '') === trimmedInput.toLowerCase().replace(/\s/g, ''));
 
     if (isDuplicate) {
       setIsButtonDisabled(true);
       toast.error("This name is already in the list.");
       setTimeout(() => {
-        setIsButtonDisabled(false); // Enable the button after 2000ms (2 seconds)
+        setIsButtonDisabled(false);
       }, 3000);
       return;
     }
@@ -62,29 +57,11 @@ function HomePage() {
     dispatch(editItem({ index: index, newName: input }));
   };
 
-  // const handleEdit = (index: number) => {
-  //   setIsEditing(true);
-  //   setEditIndex(index);
-  //   setInput(array_data[index].name);
-  // };
-
-
   const handleDelete = (index: number) => {
     dispatch(deleteItem({ index: index }));
   };
 
-  // const handleRandomSelect = () => {
-  //   if (array_data.length) {
-  //     const randomIndex = Math.floor(Math.random() * array_data.length);
-  //     setInput(array_data[randomIndex].name);
-  //     setAuto_select("show")
-  //   }
-  // };
   const handleReset = () => {
-    // if(array_data.length){
-    //   const randomIndex = Math.floor(Math.random() * array_data.length);
-    //   setInput(array_data[randomIndex].name);
-    // }
     dispatch(resetItem());
     setInput('');
   };
@@ -99,6 +76,13 @@ function HomePage() {
   const handleCloseAutoSelectPopup = () => {
     setShowAutoSelectPopup(false);
   };
+
+  const breakLongWord = (word: string) => {
+    const characters = word.split('');
+    const breakableWord = characters.join('\u200B');
+    return breakableWord;
+  };
+
   return (
     <div className="mainDivContainer">
       <div className="mainDiv">
@@ -113,10 +97,9 @@ function HomePage() {
               value={input}
               onChange={(e: any) => setInput(e.target.value)}
               label="Enter a name"
-              // label={<span style={{ color: 'white' }}>Enter a name</span>}
               sx={{
                 '& label': {
-                  color: 'white', // Apply red color to the label
+                  color: 'white',
                 },
 
               }}
@@ -139,9 +122,13 @@ function HomePage() {
               {array_data.map((data, index) => (
                 <ListItem key={index}>
                   <ListItemText
+                    className='listitem_text'
                     primary={
-                      <Typography>
-                        <strong>{index + 1}.</strong> {data.name}
+                      <Typography
+                        className='typography_text'
+                      >
+                        <strong>{index + 1}.</strong>
+                        {breakLongWord(data.name)}
                       </Typography>
                     }
                   />
@@ -175,7 +162,7 @@ function HomePage() {
             color="secondary"
             onClick={handleRandomSelect}
           >
-            auto select
+            Random Pick
           </Button>
           <Button
             className="auto_select-button"
@@ -186,42 +173,26 @@ function HomePage() {
             reset
           </Button>
         </div>
-        {/* <div className="answer-section">
-        {auto_select==="show" && (
-          <>
-            <Typography variant="h6">Your answer</Typography>
-            <Typography variant="body1" className='answer_output'>
-              {input}
-            </Typography>
-          </>
-        )}
-      </div> */}
         <ToastContainer position="top-center" autoClose={2000} limit={1} max-count={1} />
         <Dialog
           open={showAutoSelectPopup}
           onClose={handleCloseAutoSelectPopup}
           aria-labelledby="auto-select-dialog-title"
           sx={{
-            // Add your custom CSS styles here
             '& .MuiDialogTitle-root': {
-              backgroundColor: 'blue', // Change the background color of the dialog title
-              color: 'white', // Change the text color of the dialog title
+              backgroundColor: 'blue',
+              color: 'white',
             },
             '& .MuiDialogContent-root': {
-              padding: '20px', // Add padding to the dialog content
+              padding: '20px',
             },
             '& .MuiDialogActions-root': {
-              justifyContent: 'flex-end', // Align the dialog actions to the right
+              justifyContent: 'flex-end',
             },
           }}
         >
           <DialogTitle id="auto-select-dialog-title">Auto-Selected Answer</DialogTitle>
-          <DialogContent sx={{
-            // padding: "20px",
-            fontWeight: "bold",
-            fontSize: "40px" ,
-            textAlign: 'center', // Center-align the content
-          }} >
+          <DialogContent className='dialog_content'>
             <Typography variant="body1">{autoSelectAnswer}</Typography>
           </DialogContent>
           <DialogActions>

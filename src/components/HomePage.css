@@ -1,6 +1,5 @@
 /* HomePage.css */
 
-
 .mainDivContainer {
   display: flex;
   flex-direction: column;
@@ -9,19 +8,14 @@
   /* 100% of the viewport height */
 }
 
-
-
 /* Main container styles */
 .mainDiv {
   /* flex: 1; */
   max-width: 400px;
   margin: 0 auto;
   padding: 20px 20px 0;
-  /* border: 1px solid #ccc; */
   border-radius: 5px;
-  /* background-color: #f8f8f8 !important;  */
   font-family: Arial, sans-serif;
-  /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);  */
 }
 
 .navigate_cls {
@@ -36,9 +30,7 @@
 .title_cls h3 {
   font-size: 30px;
   margin-bottom: 20px;
-  /* color: #333; */
   color: #ffffff;
-  /* Dark gray text */
 }
 
 /* Input section styles */
@@ -52,10 +44,8 @@
 
 .submit_bttn {
   width: 100%;
-  /* background-color: #9A3B3B !important;  */
   background-color: #8212cd !important;
   color: #fff;
-  /* White text on the button */
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -79,20 +69,14 @@ a {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* background-color: #fff;  */
   background-color: #423a6f !important;
   padding: 10px;
-  /* border: 1px solid #ccc; */
-  /* border-radius: 5px; */
 }
-
-/* .list-section strong {
-  font-weight: bold;
-} */
 
 .icon_button {
   color: white !important;
-  padding-right: 20px !important;
+  margin-right: 10px !important;
+  padding: 0 !important;
 }
 
 .list-section .edit_bttn,
@@ -101,14 +85,11 @@ a {
   padding: 5px;
   margin-left: 10px;
   border: none;
-  /* background-color: transparent; */
   background-color: #ffffff;
   color: #ffffff !important;
 }
 
-/* Generate section styles */
 .gnt-section {
-  /* margin: 20px 0; */
   display: flex;
   justify-content: space-between;
   padding: 20px 0 0;
@@ -116,10 +97,8 @@ a {
 
 .auto_select-button {
   width: 45%;
-  background-color: #9A3B3B;
-  /* Deep red button */
+  background-color: #9a3b3b;
   color: #fff;
-  /* White text on the button */
   border: none;
   border-radius: 5px;
   cursor: pointer;
@@ -130,7 +109,6 @@ a {
   background-color: #218838;
 }
 
-/* Answer section styles */
 .answer-section {
   text-align: center;
 }
@@ -143,73 +121,61 @@ a {
 
 .answer_output {
   font-size: 25px;
-  /* background-color: #ffffff;  */
   background-color: #423a6f;
   color: #ffffff;
-  /* White answer background */
-  /* border: 1px solid #ccc; */
   padding: 10px;
   font-weight: bold;
   margin-top: 10px;
 }
 
-input[type=text],
-input[type=text]:focus {
+input[type='text'],
+input[type='text']:focus {
   color: #fff;
   border: none;
-  background-color: rgba(0, 0, 0, .2);
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .list-section {
-  /* background-color: #423a6f !important; */
-  color: #F8F9FA !important;
-
+  color: #f8f9fa !important;
   overflow-y: hidden;
-  /* Hide the vertical scrollbar */
   scrollbar-width: thin;
-  /* "auto" or "thin" to style the scrollbar */
   scrollbar-color: transparent transparent;
-  /* Scrollbar color (track color, thumb color) */
   max-height: 37vh;
-  /* Adjust the height as needed */
-
 }
-
-
-
 
 .list-section::-webkit-scrollbar {
   width: 6px;
-  /* Width of the scrollbar */
 }
 
 .list-section::-webkit-scrollbar-thumb {
   background-color: #555;
-  /* Color of the scrollbar thumb */
   border-radius: 3px;
-  /* Rounded corners for the thumb */
 }
 
 .list-section::-webkit-scrollbar-track {
   background-color: transparent;
-  /* Color of the scrollbar track */
 }
 
 .list-container {
   overflow-y: auto;
   max-height: 37vh;
-  /* Adjust the height as needed */
 }
 
-
-
-
-
-/* Add this to your HomePage.css or another appropriate CSS file */
 .list-container {
   height: auto;
   max-height: 37vh;
-  /* Adjust the height as needed */
   overflow-y: auto;
+}
+.dialog_content {
+  text-align: center;
+  padding: 10px 0 0 0 !important;
+}
 
+.listitem_text {
+  width: 290px;
+  overflow-x: auto;
+}
+
+.typography_text {
+  width: 90%;
 }
